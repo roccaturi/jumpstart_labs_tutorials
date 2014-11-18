@@ -4,7 +4,6 @@ require "erb"
 require "sunlight/congress"
 
 Sunlight::Congress.api_key = "6afd465c747941829bbda56c4c730d17"
-puts "EventManager Initialized!"
 
 def clean_zipcode(zipcode)
   zipcode.to_s.rjust(5, "0")[0..4]
@@ -12,8 +11,7 @@ end
 
 def clean_phone(phone_number)
   phone_number.to_s
-  illegal_characters = ['-', '(', ')', ' ', '.']
-  illegal_characters.each do |i|
+  ['-', '(', ')', ' ', '.'].each do |i|
     phone_number.gsub!(i, "")
   end
   if (phone_number.length > 11) || (phone_number.length < 10)
@@ -81,15 +79,16 @@ contents.each do |row|
   save_thank_you_letter(attendee_id, form_letter)
 end
 
+puts hour_data.to_s
 hour_totals = hour_data.values.sort {|a, b| b <=> a}
 puts hour_totals[0]
 puts hour_data.key(hour_totals[0])
 
 hour_values = hour_data.values.sort {|a, b| b <=> a}
-puts hour_values
+puts hour_values.to_s
 ranked_hours = []
-hour_values.each {|value| keys_by_value(value, hour_data, ranked_hours)}
-puts ranked_hours
+#hour_values.each {|value| keys_by_value(value, hour_data, ranked_hours)}
+puts ranked_hours.to_s
 
 form_report = erb_report.result(binding)
 prepare_report(form_report)
